@@ -1,5 +1,7 @@
 package com.ml.solarium.service;
 
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import com.ml.solarium.model.Coordenadas;
@@ -9,6 +11,12 @@ import com.ml.solarium.rest.response.Clima;
 @Service
 public class SolariumServiceImpl implements SolariumService {
 
+	
+	@EventListener(ApplicationReadyEvent.class)
+	public void doSomethingAfterStartup() {
+	    System.out.println("hello world, I have just started up");
+	}
+	
 	double maximoPerimetro = 0;
 	int diaMaximoLluvia;
 
