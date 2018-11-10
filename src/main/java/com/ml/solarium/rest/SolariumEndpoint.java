@@ -15,24 +15,32 @@ import org.springframework.web.context.request.WebRequest;
 import com.ml.solarium.rest.response.Clima;
 import com.ml.solarium.rest.response.Echo;
 import com.ml.solarium.rest.response.ErrorResponse;
-import com.ml.solarium.service.Controller;
+import com.ml.solarium.service.SolariumService;
 import com.ml.solarium.util.Constantes;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 public class SolariumEndpoint {
 
 	@Autowired
-	private Controller controlador;
+	private SolariumService solariumService;
 
 	@GetMapping("/echo")
+	@ApiOperation(value = "Test de conectividad")
 	public Echo echo() {
 		return new Echo("hello word!!");
 	}
 
 	@GetMapping("/clima")
+	@ApiOperation(value = "Consulta el periodo de un clima")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Retornar el periodod", response = Clima.class),
+			@ApiResponse(code = 500, message = "Cualquier error", response = void.class) })
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public Clima getClima(@RequestParam(name = "dia", required = true) int dia) {
-		return controlador.getClima(dia);
+		return solariumService.getClima(dia);
 	}
 
 	@ExceptionHandler(Exception.class)

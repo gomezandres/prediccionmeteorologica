@@ -7,7 +7,7 @@ import com.ml.solarium.model.Planeta;
 import com.ml.solarium.rest.response.Clima;
 
 @Service
-public class Controller {
+public class SolariumServiceImpl implements SolariumService {
 
 	double maximoPerimetro = 0;
 	int diaMaximoLluvia;
@@ -25,23 +25,30 @@ public class Controller {
 		betasoides.actualizarPosicion(dia);
 		vulcanos.actualizarPosicion(dia);
 
-		double distanciaSF = calcularDistancia(coordenadasSol, ferengi.getCoordenadasPolares());
-		double distanciaFV = calcularDistancia(ferengi.getCoordenadasPolares(), vulcanos.getCoordenadasPolares());
-		double distanciaVB = calcularDistancia(vulcanos.getCoordenadasPolares(), betasoides.getCoordenadasPolares());
-		double distanciaSB = calcularDistancia(coordenadasSol, betasoides.getCoordenadasPolares());
-		double distanciaFB = calcularDistancia(ferengi.getCoordenadasPolares(), betasoides.getCoordenadasPolares());
+		double distanciaSolFerengi = calcularDistancia(coordenadasSol, ferengi.getCoordenadasPolares());
+		double distanciaFerengiVulcanos = calcularDistancia(ferengi.getCoordenadasPolares(),
+				vulcanos.getCoordenadasPolares());
+		double distanciaVulcanosBetasoides = calcularDistancia(vulcanos.getCoordenadasPolares(),
+				betasoides.getCoordenadasPolares());
+		double distanciaSolBBetasoides = calcularDistancia(coordenadasSol, betasoides.getCoordenadasPolares());
+		double distanciaFerengiBetasoides = calcularDistancia(ferengi.getCoordenadasPolares(),
+				betasoides.getCoordenadasPolares());
 
-		if (isPeriodoSequia(distanciaSF, distanciaFV, distanciaVB, distanciaSB)) {
+		if (isPeriodoSequia(distanciaSolFerengi, distanciaFerengiVulcanos, distanciaVulcanosBetasoides,
+				distanciaSolBBetasoides)) {
 			clima.setPeriodo("SEQUIA");
 		} else {
-			if (isPeriodoCondicionesOptimas(distanciaFB, distanciaFV, distanciaVB)) {
+			if (isPeriodoCondicionesOptimas(distanciaFerengiBetasoides, distanciaFerengiVulcanos,
+					distanciaVulcanosBetasoides)) {
 				clima.setPeriodo("CONDICIONES OPTIMAS");
 			} else {
 				if (isPeriodoLluvia(ferengi.getCoordenadasPolares(), betasoides.getCoordenadasPolares(),
 						vulcanos.getCoordenadasPolares(), coordenadasSol)) {
 					clima.setPeriodo("LLUVIA");
-					if ((distanciaFB + distanciaFV + distanciaVB) > getMaximoPerimetro()) {
-						setMaximoPerimetro((distanciaFB + distanciaFV + distanciaVB));
+					if ((distanciaFerengiBetasoides + distanciaFerengiVulcanos
+							+ distanciaVulcanosBetasoides) > getMaximoPerimetro()) {
+						setMaximoPerimetro(
+								(distanciaFerengiBetasoides + distanciaFerengiVulcanos + distanciaVulcanosBetasoides));
 						setDiaMaximoLluvia(dia);
 					}
 				} else {
