@@ -1,4 +1,4 @@
-package com.ml.solarium.service;
+package com.ml.solarium.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -9,6 +9,7 @@ import com.ml.solarium.model.Coordenadas;
 import com.ml.solarium.model.Planeta;
 import com.ml.solarium.model.entity.Clima;
 import com.ml.solarium.repository.ClimaRepository;
+import com.ml.solarium.service.SolariumService;
 import com.ml.solarium.util.Util;
 
 @Service

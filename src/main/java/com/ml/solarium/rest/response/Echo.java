@@ -1,5 +1,8 @@
 package com.ml.solarium.rest.response;
 
+import lombok.ToString;
+
+@ToString(callSuper = false, includeFieldNames = true)
 public class Echo {
 
 	private String mensaje;

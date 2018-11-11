@@ -4,7 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import lombok.ToString;
+
 @Entity
+@ToString(callSuper = false, includeFieldNames = true)
 public class Clima {
 
 	@Id

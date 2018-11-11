@@ -2,6 +2,9 @@ package com.ml.solarium.model;
 
 import com.ml.solarium.util.Util;
 
+import lombok.ToString;
+
+@ToString(callSuper = false, includeFieldNames = true)
 public class Planeta {
 
 	private int distancia;

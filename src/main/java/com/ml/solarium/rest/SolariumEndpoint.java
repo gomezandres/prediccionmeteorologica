@@ -38,9 +38,8 @@ public class SolariumEndpoint {
 	}
 
 	@GetMapping("/clima")
-	@ApiOperation(value = "Obtiene el clima de un dia especifico")
 	@ApiResponses({
-			@ApiResponse(code = 200, message = "Retornar el estado para un dia especifico", response = Estado.class),
+			@ApiResponse(code = 200, message = "Obtiene el clima de un dia especifico", response = Estado.class),
 			@ApiResponse(code = 500, message = "Error generico", response = ErrorResponse.class) })
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public Estado obtenerClima(@RequestParam(name = "dia", required = true) int dia) {
@@ -49,20 +48,18 @@ public class SolariumEndpoint {
 	}
 
 	@GetMapping("/periodo")
-	@ApiOperation(value = "Obtiene la cantidad de dias.")
 	@ApiResponses({
-			@ApiResponse(code = 200, message = "Cantidad de dias de un periodo en particular", response = Periodo.class),
+			@ApiResponse(code = 200, message = "Obtiene los periodos de acuerdo a una estado", response = Periodo.class),
 			@ApiResponse(code = 500, message = "Error generico", response = ErrorResponse.class) })
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ApiParam(example = "SEQUA,LLUVIA, NORMAL,OPTIMO")
-	public Periodo obtenerCantidadPeriodo(@RequestParam(name = "periodo", required = true) String clima) {
+	public Periodo obtenerCantidadPeriodo(
+			@ApiParam(value = "[sequia,optimo,lluvia,normal]", required = true) @RequestParam(name = "periodo", required = true) String clima) {
 		return new Periodo(solariumService.obtenerCantidadPeriodo(clima));
 	}
 
 	@GetMapping("/lluvia/maximaintensidad")
-	@ApiOperation(value = "Obtiene el dia que habra un pico maximo de lluvia.")
 	@ApiResponses({
-			@ApiResponse(code = 200, message = "Obtiene el dia que habra lluvia con la maxima intensidad", response = Clima.class),
+			@ApiResponse(code = 200, message = "Obtiene el dia que habra lluvia con maxima intensidad", response = Clima.class),
 			@ApiResponse(code = 500, message = "Error generico", response = ErrorResponse.class) })
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public Estado obtenerDiaMaximaIntensidad() {

@@ -1,5 +1,8 @@
 package com.ml.solarium.model;
 
+import lombok.ToString;
+
+@ToString(callSuper = false, includeFieldNames = true)
 public class Coordenadas {
 
 	private double valorEjeX;
