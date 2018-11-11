@@ -8,6 +8,6 @@ public interface SolariumService {
 
 	public int obtenerCantidadPeriodo(String clima);
 
-	public Clima obtenerDiaLluviaMaxima();
+	public Clima obtenerDiaMaximaIntensidad();
 
 }

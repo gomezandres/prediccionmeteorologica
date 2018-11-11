@@ -3,6 +3,7 @@ package com.ml.solarium.model;
 public class Coordenadas {
 
 	private double valorEjeX;
+
 	private double valorEjeY;
 
 	public Coordenadas() {

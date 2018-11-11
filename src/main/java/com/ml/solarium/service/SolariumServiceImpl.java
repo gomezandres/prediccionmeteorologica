@@ -1,8 +1,5 @@
 package com.ml.solarium.service;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -12,7 +9,6 @@ import com.ml.solarium.model.Coordenadas;
 import com.ml.solarium.model.Planeta;
 import com.ml.solarium.model.entity.Clima;
 import com.ml.solarium.repository.ClimaRepository;
-import com.ml.solarium.util.Constantes;
 import com.ml.solarium.util.Util;
 
 @Service
@@ -47,17 +43,19 @@ public class SolariumServiceImpl implements SolariumService {
 
 			if (isPeriodoSequia(distanciaSolFerengi, distanciaFerengiVulcanos, distanciaVulcanosBetasoides,
 					distanciaSolBBetasoides)) {
-				climaEntity.setClima("SEQUIA");
+				climaEntity.setEstado("SEQUIA");
 			} else {
 				if (isPeriodoCondicionesOptimas(distanciaFerengiBetasoides, distanciaFerengiVulcanos,
 						distanciaVulcanosBetasoides)) {
-					climaEntity.setClima("OPTIMO");
+					climaEntity.setEstado("OPTIMO");
 				} else {
 					if (isPeriodoLluvia(ferengi.getCoordenadasPolares(), betasoides.getCoordenadasPolares(),
 							vulcanos.getCoordenadasPolares(), coordenadasSol)) {
-						climaEntity.setClima("LLUVIA");
+						climaEntity.setEstado("LLUVIA");
+						climaEntity.setIntensidad(
+								(distanciaFerengiBetasoides + distanciaFerengiVulcanos + distanciaVulcanosBetasoides));
 					} else {
-						climaEntity.setClima("NORMAL");
+						climaEntity.setEstado("NORMAL");
 					}
 				}
 			}
@@ -76,48 +74,12 @@ public class SolariumServiceImpl implements SolariumService {
 
 	@Override
 	public int obtenerCantidadPeriodo(String clima) {
-		return repository.findAllByClima(clima.toUpperCase()).size();
+		return repository.findAllByEstado(clima.toUpperCase()).size();
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
-	public Clima obtenerDiaLluviaMaxima() {
-		List<Clima> dias = repository.findAllByClima(Constantes.LLUVIA);
-		double maximoPerimetro = 0;
-		Clima diaMaximaLluva = null;
-		for (Iterator iterator = dias.iterator(); iterator.hasNext();) {
-
-			Clima clima = (Clima) iterator.next();
-
-			Coordenadas coordenadaFerengi = new Coordenadas(
-					Util.calcularCoordenadaX(ferengi.getDistancia(),
-							Math.toRadians(ferengi.getAnguloRotacion() * clima.getDia())),
-					Util.calcularCoordenadaY(ferengi.getDistancia(),
-							Math.toRadians(ferengi.getAnguloRotacion() * clima.getDia())));
-
-			Coordenadas coordenadaBetasoides = new Coordenadas(
-					Util.calcularCoordenadaX(betasoides.getDistancia(),
-							Math.toRadians(betasoides.getAnguloRotacion() * clima.getDia())),
-					Util.calcularCoordenadaY(betasoides.getDistancia(),
-							Math.toRadians(betasoides.getAnguloRotacion() * clima.getDia())));
-
-			Coordenadas coordenadaVulcanos = new Coordenadas(
-					Util.calcularCoordenadaX(vulcanos.getDistancia(),
-							Math.toRadians(vulcanos.getAnguloRotacion() * clima.getDia())),
-					Util.calcularCoordenadaY(vulcanos.getDistancia(),
-							Math.toRadians(vulcanos.getAnguloRotacion() * clima.getDia())));
-
-			double distanciaFerengiBetasoides = Util.calcularDistancia(coordenadaFerengi, coordenadaBetasoides);
-			double distanciaFerengiVulcanos = Util.calcularDistancia(coordenadaFerengi, coordenadaVulcanos);
-			double distanciaVulcanosBetasoides = Util.calcularDistancia(coordenadaVulcanos, coordenadaBetasoides);
-
-			if ((distanciaFerengiBetasoides + distanciaFerengiVulcanos
-					+ distanciaVulcanosBetasoides) > maximoPerimetro) {
-				diaMaximaLluva = clima;
-			}
-		}
-
-		return diaMaximaLluva;
+	public Clima obtenerDiaMaximaIntensidad() {
+		return repository.findLluviaMaximaIntensidad().get(0);
 	}
 
 	public static boolean isPeriodoSequia(double distanciaSF, double distanciaFV, double distanciaVB,

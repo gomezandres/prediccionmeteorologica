@@ -5,7 +5,9 @@ import com.ml.solarium.util.Util;
 public class Planeta {
 
 	private int distancia;
+
 	private float anguloRotacion;
+
 	private Coordenadas coordenadasPolares = new Coordenadas();
 
 	public Planeta(int distancia, int anguloRotacion) {

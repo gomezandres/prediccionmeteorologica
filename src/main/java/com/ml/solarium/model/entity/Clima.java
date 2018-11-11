@@ -3,25 +3,26 @@ package com.ml.solarium.model.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "clima")
 public class Clima {
 
 	@Id
-	@Column(name = "dia", columnDefinition = "integer")
+	@Column(name = "dia", columnDefinition = "bigint")
 	private Integer dia;
 
-	@Column(name = "periodo", nullable = false, columnDefinition = "varchar")
-	private String clima;
+	@Column(name = "estado", nullable = false, columnDefinition = "varchar")
+	private String estado;
 
-	public String getClima() {
-		return clima;
+	@Column(name = "intensidad", nullable = true, columnDefinition = "float")
+	private double intensidad;
+
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setClima(String clima) {
-		this.clima = clima;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public Integer getDia() {
@@ -30,6 +31,14 @@ public class Clima {
 
 	public void setDia(Integer dia) {
 		this.dia = dia;
+	}
+
+	public double getIntensidad() {
+		return intensidad;
+	}
+
+	public void setIntensidad(double intensidad) {
+		this.intensidad = intensidad;
 	}
 
 }

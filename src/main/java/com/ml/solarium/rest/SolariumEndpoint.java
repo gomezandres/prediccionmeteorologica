@@ -45,7 +45,7 @@ public class SolariumEndpoint {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public Estado obtenerClima(@RequestParam(name = "dia", required = true) int dia) {
 		Clima clima = solariumService.obtenerClima(dia);
-		return new Estado(clima.getDia(), clima.getClima());
+		return new Estado(clima.getDia(), clima.getEstado());
 	}
 
 	@GetMapping("/periodo")
@@ -59,15 +59,15 @@ public class SolariumEndpoint {
 		return new Periodo(solariumService.obtenerCantidadPeriodo(clima));
 	}
 
-	@GetMapping("/lluvia/maximo")
+	@GetMapping("/lluvia/maximaintensidad")
 	@ApiOperation(value = "Obtiene el dia que habra un pico maximo de lluvia.")
 	@ApiResponses({
-			@ApiResponse(code = 200, message = "Obtiene el dia que habra un pico maximo de lluvia", response = Clima.class),
+			@ApiResponse(code = 200, message = "Obtiene el dia que habra lluvia con la maxima intensidad", response = Clima.class),
 			@ApiResponse(code = 500, message = "Error generico", response = ErrorResponse.class) })
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public Estado obtenerDiaLluviaMaxima() {
-		Clima clima = solariumService.obtenerDiaLluviaMaxima();
-		return new Estado(clima.getDia(), clima.getClima());
+	public Estado obtenerDiaMaximaIntensidad() {
+		Clima clima = solariumService.obtenerDiaMaximaIntensidad();
+		return new Estado(clima.getDia(), clima.getEstado());
 	}
 
 	@ExceptionHandler(Exception.class)

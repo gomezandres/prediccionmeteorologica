@@ -14,10 +14,22 @@ public class Util {
 				- (puntoA.getValorEjeY() - puntoC.getValorEjeY()) * (puntoB.getValorEjeX() - puntoA.getValorEjeX());
 	}
 
+	/**
+	 * 
+	 * @param radio
+	 * @param anguloRadianes
+	 * @return valor x
+	 */
 	public static double calcularCoordenadaX(int radio, double anguloRadianes) {
 		return Math.round(radio * Math.cos(anguloRadianes) * 100d) / 100d;
 	}
 
+	/**
+	 * 
+	 * @param radio
+	 * @param anguloRadianes
+	 * @return valor y
+	 */
 	public static double calcularCoordenadaY(int radio, double anguloRadianes) {
 		return Math.round(radio * Math.sin(anguloRadianes) * 100d) / 100d;
 	}
