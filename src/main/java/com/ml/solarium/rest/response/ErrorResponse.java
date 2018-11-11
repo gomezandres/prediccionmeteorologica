@@ -14,6 +14,7 @@ public class ErrorResponse {
 		super();
 		this.timestamp = timestamp;
 		this.mensaje = mensaje;
+
 	}
 
 	public Date getTimestamp() {

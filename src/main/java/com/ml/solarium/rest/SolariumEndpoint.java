@@ -41,7 +41,6 @@ public class SolariumEndpoint {
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "Obtiene el clima de un dia especifico", response = Estado.class),
 			@ApiResponse(code = 500, message = "Error generico", response = ErrorResponse.class) })
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public Estado obtenerClima(@RequestParam(name = "dia", required = true) int dia) {
 		Clima clima = solariumService.obtenerClima(dia);
 		return new Estado(clima.getDia(), clima.getEstado());
@@ -51,7 +50,6 @@ public class SolariumEndpoint {
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "Obtiene los periodos de acuerdo a una estado", response = Periodo.class),
 			@ApiResponse(code = 500, message = "Error generico", response = ErrorResponse.class) })
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public Periodo obtenerCantidadPeriodo(
 			@ApiParam(value = "[sequia,optimo,lluvia,normal]", required = true) @RequestParam(name = "periodo", required = true) String clima) {
 		return new Periodo(solariumService.obtenerCantidadPeriodo(clima));
@@ -61,13 +59,13 @@ public class SolariumEndpoint {
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "Obtiene el dia que habra lluvia con maxima intensidad", response = Clima.class),
 			@ApiResponse(code = 500, message = "Error generico", response = ErrorResponse.class) })
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public Estado obtenerDiaMaximaIntensidad() {
 		Clima clima = solariumService.obtenerDiaMaximaIntensidad();
 		return new Estado(clima.getDia(), clima.getEstado());
 	}
 
 	@ExceptionHandler(Exception.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public final ResponseEntity<ErrorResponse> handleException(Exception ex, WebRequest request) {
 		ErrorResponse error = new ErrorResponse(new Date(), Constantes.ERROR_GENERICO);
 		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
