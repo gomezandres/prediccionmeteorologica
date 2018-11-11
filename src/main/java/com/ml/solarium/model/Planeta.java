@@ -1,5 +1,7 @@
 package com.ml.solarium.model;
 
+import com.ml.solarium.util.Util;
+
 public class Planeta {
 
 	private int distancia;
@@ -37,8 +39,9 @@ public class Planeta {
 	}
 
 	public void actualizarPosicion(int dia) {
-		double anguloRadianes = Math.toRadians(this.anguloRotacion * dia);
-		this.coordenadasPolares.setValorEjeX(Math.round(distancia * Math.cos(anguloRadianes) * 100d) / 100d);
-		this.coordenadasPolares.setValorEjeY(Math.round(distancia * Math.sin(anguloRadianes) * 100d) / 100d);
+		this.coordenadasPolares
+				.setValorEjeX(Util.calcularCoordenadaX(distancia, Math.toRadians(this.anguloRotacion * dia)));
+		this.coordenadasPolares
+				.setValorEjeY(Util.calcularCoordenadaY(distancia, Math.toRadians(this.anguloRotacion * dia)));
 	}
 }

@@ -1,9 +1,13 @@
 package com.ml.solarium.service;
 
-import com.ml.solarium.rest.response.Clima;
+import com.ml.solarium.model.entity.Clima;
 
 public interface SolariumService {
 
-	Clima getClima(int dia);
+	public Clima obtenerClima(int dia);
+
+	public int obtenerCantidadPeriodo(String clima);
+
+	public Clima obtenerDiaLluviaMaxima();
 
 }
