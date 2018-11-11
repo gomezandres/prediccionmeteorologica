@@ -95,7 +95,16 @@
 			<version>1.18.4</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>com.google.cloud.sql</groupId>
+			<artifactId>mysql-socket-factory-connector-j-8</artifactId>
+			<version>1.0.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.cloud.sql</groupId>
+			<artifactId>postgres-socket-factory</artifactId>
+			<version>1.0.11</version>
+		</dependency>
 	</dependencies>
 
 

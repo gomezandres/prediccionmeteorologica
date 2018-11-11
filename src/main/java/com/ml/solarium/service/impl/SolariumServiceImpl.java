@@ -25,46 +25,52 @@ public class SolariumServiceImpl implements SolariumService {
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void loadDatabase() {
-		Clima climaEntity = new Clima();
+		Clima clima = null;
 		int dia = 0;
-		while (dia < 3650) {
+		if (repository.findAll().isEmpty()) {
+			while (dia < 3650) {
 
-			ferengi.actualizarPosicion(dia);
-			betasoides.actualizarPosicion(dia);
-			vulcanos.actualizarPosicion(dia);
+				clima = new Clima();
+				clima.setDia(dia);
+				clima.setIntensidad(0);
 
-			double distanciaSolFerengi = Util.calcularDistancia(coordenadasSol, ferengi.getCoordenadasPolares());
-			double distanciaFerengiVulcanos = Util.calcularDistancia(ferengi.getCoordenadasPolares(),
-					vulcanos.getCoordenadasPolares());
-			double distanciaVulcanosBetasoides = Util.calcularDistancia(vulcanos.getCoordenadasPolares(),
-					betasoides.getCoordenadasPolares());
-			double distanciaSolBBetasoides = Util.calcularDistancia(coordenadasSol, betasoides.getCoordenadasPolares());
-			double distanciaFerengiBetasoides = Util.calcularDistancia(ferengi.getCoordenadasPolares(),
-					betasoides.getCoordenadasPolares());
+				ferengi.actualizarPosicion(dia);
+				betasoides.actualizarPosicion(dia);
+				vulcanos.actualizarPosicion(dia);
 
-			if (isPeriodoSequia(distanciaSolFerengi, distanciaFerengiVulcanos, distanciaVulcanosBetasoides,
-					distanciaSolBBetasoides)) {
-				climaEntity.setEstado("SEQUIA");
-			} else {
-				if (isPeriodoCondicionesOptimas(distanciaFerengiBetasoides, distanciaFerengiVulcanos,
-						distanciaVulcanosBetasoides)) {
-					climaEntity.setEstado("OPTIMO");
+				double distanciaSolFerengi = Util.calcularDistancia(coordenadasSol, ferengi.getCoordenadasPolares());
+				double distanciaFerengiVulcanos = Util.calcularDistancia(ferengi.getCoordenadasPolares(),
+						vulcanos.getCoordenadasPolares());
+				double distanciaVulcanosBetasoides = Util.calcularDistancia(vulcanos.getCoordenadasPolares(),
+						betasoides.getCoordenadasPolares());
+				double distanciaSolBBetasoides = Util.calcularDistancia(coordenadasSol,
+						betasoides.getCoordenadasPolares());
+				double distanciaFerengiBetasoides = Util.calcularDistancia(ferengi.getCoordenadasPolares(),
+						betasoides.getCoordenadasPolares());
+
+				if (isPeriodoSequia(distanciaSolFerengi, distanciaFerengiVulcanos, distanciaVulcanosBetasoides,
+						distanciaSolBBetasoides)) {
+					clima.setEstado("SEQUIA");
 				} else {
-					if (isPeriodoLluvia(ferengi.getCoordenadasPolares(), betasoides.getCoordenadasPolares(),
-							vulcanos.getCoordenadasPolares(), coordenadasSol)) {
-						climaEntity.setEstado("LLUVIA");
-						climaEntity.setIntensidad(
-								(distanciaFerengiBetasoides + distanciaFerengiVulcanos + distanciaVulcanosBetasoides));
+					if (isPeriodoCondicionesOptimas(distanciaFerengiBetasoides, distanciaFerengiVulcanos,
+							distanciaVulcanosBetasoides)) {
+						clima.setEstado("OPTIMO");
 					} else {
-						climaEntity.setEstado("NORMAL");
+						if (isPeriodoLluvia(ferengi.getCoordenadasPolares(), betasoides.getCoordenadasPolares(),
+								vulcanos.getCoordenadasPolares(), coordenadasSol)) {
+							clima.setEstado("LLUVIA");
+							clima.setIntensidad((distanciaFerengiBetasoides + distanciaFerengiVulcanos
+									+ distanciaVulcanosBetasoides));
+						} else {
+							clima.setEstado("NORMAL");
+						}
 					}
 				}
+
+				repository.save(clima);
+
+				dia++;
 			}
-
-			climaEntity.setDia(dia);
-			repository.save(climaEntity);
-
-			dia++;
 		}
 	}
 
