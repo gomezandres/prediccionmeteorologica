@@ -5,11 +5,13 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
+import com.ml.solarium.exception.ClimaNotFoundException;
 import com.ml.solarium.model.Coordenadas;
 import com.ml.solarium.model.Planeta;
 import com.ml.solarium.model.entity.Clima;
 import com.ml.solarium.repository.ClimaRepository;
 import com.ml.solarium.service.SolariumService;
+import com.ml.solarium.util.Constantes;
 import com.ml.solarium.util.Util;
 
 @Service
@@ -75,8 +77,11 @@ public class SolariumServiceImpl implements SolariumService {
 	}
 
 	@Override
-	public Clima obtenerClima(int dia) {
-		return repository.findByDia(dia);
+	public Clima obtenerClima(int dia) throws ClimaNotFoundException {
+		Clima clima = repository.findByDia(dia);
+		if (clima == null)
+			throw new ClimaNotFoundException(Constantes.SIN_PREDICCION);
+		return clima;
 	}
 
 	@Override

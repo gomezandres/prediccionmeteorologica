@@ -33,14 +33,24 @@ public class SolariumEndpointTest extends SolariumApplicationTests {
 	}
 
 	@Test
+	public void testObtenerClimaNotFoundException() throws Exception {
+		mockMvc.perform(get("/clima?dia=10000")).andExpect(status().is(404));
+	}
+
+	@Test
+	public void testObtenerClimaMissingServletRequestParameterException() throws Exception {
+		mockMvc.perform(get("/clima?")).andExpect(status().is(400));
+	}
+
+	@Test
 	public void testObtenerClimaSEQUIA() throws Exception {
 		mockMvc.perform(get("/clima?dia=0")).andExpect(status().isOk()).andExpect(jsonPath("$.clima").value("SEQUIA"))
 				.andExpect(jsonPath("$.dia").value("0"));
 	}
 
 	@Test
-	public void testObtenerClimaStatusInputA() throws Exception {
-		mockMvc.perform(get("/clima?dia=A")).andExpect(status().is5xxServerError());
+	public void testObtenerClimaMethodArgumentTypeMismatchException() throws Exception {
+		mockMvc.perform(get("/clima?")).andExpect(status().is(400));
 	}
 
 	@Test
@@ -49,8 +59,8 @@ public class SolariumEndpointTest extends SolariumApplicationTests {
 	}
 
 	@Test
-	public void testPeriodoStatus500() throws Exception {
-		mockMvc.perform(get("/periodo")).andExpect(status().is5xxServerError());
+	public void testPeriodoMissingServletRequestParameterException() throws Exception {
+		mockMvc.perform(get("/periodo")).andExpect(status().is(400));
 	}
 
 	@Test
