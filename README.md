@@ -1,6 +1,6 @@
 # Proyecto SOLARIUM
 ---
-  Este sistema permite predecir el clima a partir de las coordenadas polares de los planetas Vulcanos, Ferengis, Betasoides con respecto al sol 
+  Este sistema permite predecir el clima a partir de las coordenadas polares de los planetas: Vulcanos, Ferengis, Betasoides con respecto al sol.
 
 ### Consideraciones 
 ---
@@ -9,10 +9,10 @@
 * Se predice hasta 10 años
 * Angulo de rotación: 
     * Positivo, sentido anti horario
-    * Negativo, sentido horario.
+    * Negativo, sentido horario
 * Distancia es el radio r
-* Se carga la base de datos solo si la misma se encuentra vacía.
-* El ángulo de rotación inicial para cada planeta se considera en grados.
+* Se carga la base de datos solo si la misma se encuentra vacía
+* El ángulo de rotación inicial para cada planeta se considera en grados
 
 ### Algoritmos
 ---
