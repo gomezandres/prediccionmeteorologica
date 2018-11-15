@@ -1,6 +1,6 @@
 # Proyecto SOLARIUM
 ---
-Este sistema permite predecir el clima a partir de las coordenadas polares de tres planetas: Vulcanos, Ferengis y Betasoides y el Sol. 
+  Este sistema permite predecir el clima a partir de las coordenadas polares de los planetas Vulcanos, Ferengis, Betasoides con respecto al sol 
 
 ### Consideraciones 
 ---
@@ -22,10 +22,10 @@ Para el calculo de coordenadas polares:
 * y = r × sin(θ) **Ángulo expresado en radianes**
 
 Para el cálculo del clima:
-* **1** - Sequía: Cálculos de puntos colineales para conocer si los tres planetas junto con el sol están alineados.  [Cálculo de puntos colineales](https://definicion.de/puntos-colineales/)
-* **2** - Condiciones óptimas de presión y temperatura: Idem **periodo de sequía** pero cuando el Sol no está alineado a los planetas.
-* **3** - Lluvia: Cuando los puntos no son colineales y se determina que el Sol se encuentra dentro del triángulo. [Determinación de un punto interior a un triángulo](https://tecdigital.tec.ac.cr/revistamatematica/Contribucionesv3n2002/WMoraMatProg/pag2.html)
-*   **3 - A** - Pico máximo de lluvia: Cuando es un período de lluvia y el perímetro del triángulo es el máximo. [Calculo de perímetro de un triángulo](https://www.universoformulas.com/matematicas/geometria/perimetro-triangulo/)
+* **1** - Sequía: Cálculo de puntos colineales para conocer si los tres planetas junto con el sol están alineados.  [Cálculo de puntos colineales](https://definicion.de/puntos-colineales/)
+* **2** - Condiciones óptimas de presión y temperatura: Cálculo de puntos colineales para conocer si solamente los tres planetas están alineados.
+* **3** - Lluvia: Cuando los puntos no son colineales y se determina que el sol se encuentra dentro del triángulo. [Determinación de un punto interior a un triángulo](https://tecdigital.tec.ac.cr/revistamatematica/Contribucionesv3n2002/WMoraMatProg/pag2.html)
+*   **3 - A** - Pico máximo de lluvia: Cuando es un período de lluvia y el perímetro del triángulo es el máximo. [Cálculo de perímetro de un triángulo](https://www.universoformulas.com/matematicas/geometria/perimetro-triangulo/)
 * **4** - Clima Normal: Cuando no se corresponde a ningún punto anterior.
 
 El algoritmo implementado calcula el clima (SEQUIA/OPTIMO/LLUVIA/NORMAL) en el orden descripto anteriormente.
